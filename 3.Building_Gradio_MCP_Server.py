@@ -9,6 +9,17 @@ Sets up JSON-RPC over HTTP+SSE for client-server communication
 Creates both a web interface and an MCP server endpoint
 
 
+
+demo.launch(mcp_server=True) does two things:
+
+1) Starts the Gradio web app (local or public link for UI).
+2) Enables MCP (Multi-Client Protocol) server mode:
+
+- This allows programmatic access (like via HTTP API calls or other client tools).
+- Useful for integrating into other software, apps, or microservices
+
+
+
 Troubleshooting Tips
 
 1) Type Hints and Docstrings:
@@ -35,9 +46,9 @@ Verify that the MCP schema is available at the expected URL
 
 """
 
-import json
-import gradio as gr
-from textblob import TextBlob 
+import json # Used to convert Python dictionaries to JSON strings that can be output in the UI
+import gradio as gr # Used to create web UI and MCP (Model Control PLane) Server that can be called programatically
+from textblob import TextBlob # Use to perform sentiment analysis, which tells how positive/negative and subjective/objective a piece of text is.
 
 def sentiment_analysis(text: str) -> str:
     """
@@ -60,7 +71,7 @@ def sentiment_analysis(text: str) -> str:
         "assessment": "positive" if sentiment.polarity > 0 else "negative" if sentiment.polarity < 0 else "neutral"
     }
     
-    return json.dumps(result)
+    return json.dumps(result) # A JSON-formatted string
 
 
 # gr.Interface creates both the web UI and MCP server
